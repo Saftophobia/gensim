@@ -361,7 +361,7 @@ cdef unsigned long long fast_sentence_cbow_neg(
     return next_random
 
 
-def train_batch_sg(model, sentences, alpha, _work, compute_loss, _doc2vecC=None):
+def train_batch_sg(model, sentences, alpha, _work, compute_loss, _doc2vecC):
     cdef int hs = model.hs
     cdef int negative = model.negative
     cdef int sample = (model.vocabulary.sample != 0)
@@ -475,7 +475,7 @@ def train_batch_sg(model, sentences, alpha, _work, compute_loss, _doc2vecC=None)
     return effective_words
 
 
-def train_batch_cbow(model, sentences, alpha, _work, _neu1, compute_loss, _doc2vecC=None):
+def train_batch_cbow(model, sentences, alpha, _work, _neu1, compute_loss, _doc2vecC):
     cdef int hs = model.hs
     cdef int negative = model.negative
     cdef int sample = (model.vocabulary.sample != 0)
