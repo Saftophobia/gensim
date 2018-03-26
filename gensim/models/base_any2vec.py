@@ -299,7 +299,7 @@ class BaseWordEmbeddingsModel(BaseAny2VecModel):
 
     def __init__(self, sentences=None, workers=3, vector_size=100, epochs=5, callbacks=(), batch_words=10000,
                  trim_rule=None, sg=0, alpha=0.025, window=5, seed=1, hs=0, negative=5, cbow_mean=1,
-                 min_alpha=0.0001, compute_loss=False, fast_version=0, **kwargs):
+                 min_alpha=0.0001, compute_loss=False, fast_version=0, doc2vecC=None, **kwargs):
         self.sg = int(sg)
         if vector_size % 4 != 0:
             logger.warning("consider setting layer size to a multiple of 4 for greater performance")
@@ -342,6 +342,10 @@ class BaseWordEmbeddingsModel(BaseAny2VecModel):
                     "The rule, if given, is only used to prune vocabulary during build_vocab() "
                     "and is not stored as part of the model. Model initialized without sentences. "
                     "trim_rule provided, if any, will be ignored.")
+
+        if doc2vecC is not None:
+            self.doc2vecC = float(doc2vecC)
+
 
     # for backward compatibility (aliases pointing to corresponding variables in trainables, vocabulary)
     @property

@@ -475,7 +475,7 @@ class Word2Vec(BaseWordEmbeddingsModel):
 
     def __init__(self, sentences=None, size=100, alpha=0.025, window=5, min_count=5,
                  max_vocab_size=None, sample=1e-3, seed=1, workers=3, min_alpha=0.0001,
-                 sg=0, hs=0, negative=5, cbow_mean=1, hashfxn=hash, iter=5, null_word=0,
+                 sg=0, hs=0, negative=5, cbow_mean=1, hashfxn=hash, iter=5, null_word=0, doc2vecC=None,
                  trim_rule=None, sorted_vocab=1, batch_words=MAX_WORDS_IN_BATCH, compute_loss=False, callbacks=()):
         """
         Initialize the model from an iterable of `sentences`. Each sentence is a
@@ -575,7 +575,7 @@ class Word2Vec(BaseWordEmbeddingsModel):
             sentences=sentences, workers=workers, vector_size=size, epochs=iter, callbacks=callbacks,
             batch_words=batch_words, trim_rule=trim_rule, sg=sg, alpha=alpha, window=window, seed=seed,
             hs=hs, negative=negative, cbow_mean=cbow_mean, min_alpha=min_alpha, compute_loss=compute_loss,
-            fast_version=FAST_VERSION)
+            fast_version=FAST_VERSION, doc2vecC=doc2vecC)
 
     def _do_train_job(self, sentences, alpha, inits):
         """
@@ -585,9 +585,9 @@ class Word2Vec(BaseWordEmbeddingsModel):
         work, neu1 = inits
         tally = 0
         if self.sg:
-            tally += train_batch_sg(self, sentences, alpha, work, self.compute_loss)
+            tally += train_batch_sg(self, sentences, alpha, work, self.compute_loss, self.doc2vecC)
         else:
-            tally += train_batch_cbow(self, sentences, alpha, work, neu1, self.compute_loss)
+            tally += train_batch_cbow(self, sentences, alpha, work, neu1, self.compute_loss, self.doc2vecC)
         return tally, self._raw_word_count(sentences)
 
     def _clear_post_train(self):
