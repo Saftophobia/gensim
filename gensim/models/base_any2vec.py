@@ -329,8 +329,7 @@ class BaseWordEmbeddingsModel(BaseAny2VecModel):
                 self.neg_labels = zeros(self.negative + 1)
                 self.neg_labels[0] = 1.
 
-        if doc2vecC is not None:
-            self.doc2vecC = float(doc2vecC)
+        self.doc2vecC = float(doc2vecC) if doc2vecC is not None else None
 
         if sentences is not None:
             if isinstance(sentences, GeneratorType):
