@@ -329,6 +329,9 @@ class BaseWordEmbeddingsModel(BaseAny2VecModel):
                 self.neg_labels = zeros(self.negative + 1)
                 self.neg_labels[0] = 1.
 
+        if doc2vecC is not None:
+            self.doc2vecC = float(doc2vecC)
+
         if sentences is not None:
             if isinstance(sentences, GeneratorType):
                 raise TypeError("You can't pass a generator as the sentences argument. Try an iterator.")
@@ -343,8 +346,7 @@ class BaseWordEmbeddingsModel(BaseAny2VecModel):
                     "and is not stored as part of the model. Model initialized without sentences. "
                     "trim_rule provided, if any, will be ignored.")
 
-        if doc2vecC is not None:
-            self.doc2vecC = float(doc2vecC)
+
 
 
     # for backward compatibility (aliases pointing to corresponding variables in trainables, vocabulary)
